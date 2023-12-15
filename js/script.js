@@ -15,6 +15,7 @@ const headers = {
 
 let arrayPlayers = []
 let playersDB
+let contador = 0
 
 async function getPlayers() {
     try {
@@ -108,15 +109,18 @@ function addArray(players, id) {
         const pra = Number(document.getElementById(`input-${id}`).value)
         const player = players.find(player => player.id === id)
         const eachPlayer = [player.id, player.price, pra, player.name]
+        const isPlayerInArray = arrayPlayers.some(item => item[0] === player.id)
+        if (isPlayerInArray) return alert('Player já esta no Array!')
         arrayPlayers.push(eachPlayer)
         const tr = document.getElementById(`check-${player.id}`)
         const tdCheck = document.createElement('td')
         tdCheck.innerHTML = `<i class="fa-solid fa-check"></i>`
+        incrementar(contador)
         tr.appendChild(tdCheck)
 }
 
 function downloadArray() {
-    arrayPlayers.sort((a,b) => b.pra - a.pra)
+    arrayPlayers.sort((a,b) => b[2] - a[2])
     const jsonString = JSON.stringify(arrayPlayers, null, 2)
     const blob = new Blob([jsonString], { type: 'application/json' })
     const url = URL.createObjectURL(blob)
@@ -128,6 +132,11 @@ function downloadArray() {
     a.click()
     document.body.removeChild(a)
     URL.revokeObjectURL(url)
+}
+
+function incrementar() {
+    contador++
+    contaPlayers.value = `Players: ${contador}`
 }
 
 

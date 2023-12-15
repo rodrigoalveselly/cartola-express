@@ -27,3 +27,7 @@ main {
 .text-color:hover {
     color: #FF7500 !important;
 }
+
+#contaPlayers {
+    width: 110px;
+}
